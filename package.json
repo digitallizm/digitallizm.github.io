@@ -2,10 +2,11 @@
   "private": true,
   "scripts": {
     "start": "browser-sync start --server src --no-notify --no-ui --cwd src --files index.html, /**/*",
-    "test": "editorconfig-checker",
+    "test": "editorconfig-checker --exclude '.git|node_modules|.DS_Store|.vscode'",
     "html": "html-minifier --remove-comments --collapse-whitespace --input-dir src --output-dir dist --file-ext html",
     "styles": "postcss src/css/style.css --use postcss-import --use postcss-csso --no-map --output dist/styles/style.css",
-    "build": "npm run html && npm run styles"
+    "build": "npm run html && npm run styles",
+    "deploy":"rsync --archive --compress --delete --exclude '.git|node_modules|.DS_Store|.vscode|dist|src' . oleksii@hutnichenko.dev:var/www/hutnichenko.dev/html"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
