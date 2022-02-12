@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "start": "browser-sync start --server . --no-notify --no-ui --cwd . --files index.html, /**/*",
-    "test": "editorconfig-checker",
+    "test": "editorconfig-checker --exclude='.git*,.scss,.DS_store,node_modules,.vscode'",
     "html": "html-minifier --remove-comments --collapse-whitespace --input-dir src --output-dir dist --file-ext html",
     "styles": "postcss src/css/style.css --use postcss-import --use postcss-csso --no-map --output dist/styles/style.css",
     "build": "npm run html && npm run styles",
