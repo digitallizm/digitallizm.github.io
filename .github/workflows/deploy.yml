@@ -4,23 +4,14 @@ on:
   push:
     branches:
       - main
-
+      
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v2
-      
-    - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y rsync
-      
-    - name: Write SSH keys
+    - name: Deploy to web server
       run: |
-        install -m 600 -D /dev/null ~/.ssh/id_rsa
-        echo "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        ssh-keyscan -H hutnichenko.dev > ~/.ssh/known_hosts
-      
-    - name: Deploy code
-      run: rsync -avz --delete --exclude={'.git/', '.github/', '.vscode/'} ${{ github.workspace }}/* oleksii@$hutnichenko.dev:/var/www/hutnichenko.dev/html/
-      
+        # Replace with your deployment script
+        ssh oleksii@hutnichenko.dev "cd /var/www/hutnichenko.dev/html/ && git pull"
