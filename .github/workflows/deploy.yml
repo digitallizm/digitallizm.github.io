@@ -9,16 +9,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v2
-    - name: Create SSH key
+      
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y rsync
+      
+    - name: Write SSH keys
       run: |
         install -m 600 -D /dev/null ~/.ssh/id_rsa
         echo "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        host='hutnichenko.dev'
-        hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
-        ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
-    - name: Deploy to web server  
-      run: |
-        # Replace with your deployment script
-        ssh oleksii@hutnichenko.dev "cd /var/www/hutnichenko.dev/html/ && git pull"
+        ssh-keyscan -H hutnichenko.dev > ~/.ssh/known_hosts
+      
+    - name: Deploy code
+      run: rsync -avz --delete --exclude={'.git/', '.github/', '.vscode/'} ${{ github.workspace }}/* oleksii@$hutnichenko.dev:/var/www/hutnichenko.dev/html/
