@@ -11,7 +11,14 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-    - name: Deploy to web server
+    - name: Create SSH key
+      run: |
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        host='hutnichenko.dev'
+        hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
+        ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
+    - name: Deploy to web server  
       run: |
         # Replace with your deployment script
         ssh oleksii@hutnichenko.dev "cd /var/www/hutnichenko.dev/html/ && git pull"
