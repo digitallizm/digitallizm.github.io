@@ -7,10 +7,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v2
-    - name: Deploy to web server
-      run: |
-        ssh oleksii@hutnichenko.dev "cd /var/www/hutnichenko.dev/html/ && git pull"
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
+    - name: Deploy code
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SERVER_PRIVATE_KEY }}
+        script: |
+          cd ${{ secrets.SSH_SITE_PATH }}
+          git pull
+          sudo service nginx reload
