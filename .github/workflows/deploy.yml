@@ -21,4 +21,8 @@ jobs:
           git stash
           git pull
           git stash apply
+<<<<<<< HEAD
           sudo systemctl restart nginx
+=======
+          sudo systemctl restart nginx
+>>>>>>> b9d7d8b33dcba0ca1475862a1c44eee1abc7ffa8
