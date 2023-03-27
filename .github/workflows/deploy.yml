@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Deploy code
       uses: appleboy/ssh-action@master
       with:
@@ -18,6 +18,6 @@ jobs:
         port: 22
         script: |
           cd ${{ secrets.SSH_SITE_PATH }}
-          sudo rm -rf ${{ secrets.SSH_SITE_PATH }}
+          sudo rm -f ${{ secrets.SSH_SITE_PATH }}*
           git pull
           sudo service nginx reload
