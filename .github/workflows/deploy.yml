@@ -18,6 +18,7 @@ jobs:
         port: 22
         script: |
           cd ${{ secrets.SSH_SITE_PATH }}
-          sudo rm -f ${{ secrets.SSH_SITE_PATH }}*
+          git stash
           git pull
-          sudo service nginx reload
+          git stash apply
+          sudo systemctl restart nginx
