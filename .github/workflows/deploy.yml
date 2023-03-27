@@ -18,5 +18,6 @@ jobs:
         port: 22
         script: |
           cd ${{ secrets.SSH_SITE_PATH }}
+          sudo rm -rf ./
           git pull
           sudo service nginx reload
