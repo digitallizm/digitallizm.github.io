@@ -12,10 +12,10 @@ jobs:
     - name: Deploy code
       uses: appleboy/scp-action@master
       with:
-      host: ${{ secrets.SSH_HOST }}
-      username: ${{ secrets.SSH_USERNAME }}
-      key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
-      passphrase: 
-      rm: true
-      source: "/"
-      target: "${{ secrets.SSH_SITE_PATH }}"
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
+        passphrase: 
+        rm: true
+        source: "/"
+        target: "${{ secrets.SSH_SITE_PATH }}"
