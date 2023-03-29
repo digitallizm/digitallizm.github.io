@@ -17,5 +17,5 @@ jobs:
         key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
         passphrase: 
         rm: true
-        source: "/"
+        source: "*"
         target: "${{ secrets.SSH_SITE_PATH }}"
